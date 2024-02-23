@@ -67,8 +67,8 @@ module "network" {
   resource_group_name = azurerm_resource_group.vnet.name
   vnet_name           = local.name
   address_space       = "10.0.0.0/16"
-  subnet_prefixes     = ["10.0.0.0/24","10.0.2.0/24", "10.0.3.0/24", "10.0.4.0/24"]
-  subnet_names        = ["subnet01", "subnet02", "subnet03", "subnet04"]
+  subnet_prefixes     = ["10.0.0.0/24","10.0.2.0/24", "10.0.3.0/24"]
+  subnet_names        = ["sub01", "sub02", "sub03"]
 
   depends_on = [azurerm_resource_group.vnet]
 }
