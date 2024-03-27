@@ -104,13 +104,13 @@ resource "azurerm_network_security_group" "allow_ssh" {
 }
 
 resource "azurerm_subnet_network_security_group_association" "nsg_association_subnet_1" {
-  depends_on = [ azurerm_subnet.subnet_1 ]
+  depends_on                = [ azurerm_subnet.subnet_1 ]
   subnet_id                 = azurerm_subnet.subnet_1.id
   network_security_group_id = azurerm_network_security_group.allow_ssh.id
 }
 
 resource "azurerm_subnet_network_security_group_association" "nsg_association_subnet_2" {
-  depends_on = [ azurerm_subnet.subnet_2 ]
+  depends_on                = [ azurerm_subnet.subnet_2 ]
   subnet_id                 = azurerm_subnet.subnet_2.id
   network_security_group_id = azurerm_network_security_group.allow_ssh.id
 }
