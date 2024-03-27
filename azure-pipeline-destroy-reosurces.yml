@@ -22,6 +22,13 @@ jobs:
         pipeline: $(pr_pipeline_id)
         artifact: PlanFile
 
+    - task: AzureKeyVault@1
+      inputs:
+        ConnectedServiceName: $(service_name)
+        keyVaultName: $(key_vault_name)
+        secretsFilter: '*'
+        runAsPreJob: false # Azure DevOps Services only
+
     - task: TerraformCLI@0
       displayName: Initialize Terraform
       env:
