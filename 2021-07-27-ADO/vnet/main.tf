@@ -61,16 +61,28 @@ resource "azurerm_resource_group" "vnet" {
   location = var.region
 }
 
-module "network" {
-  source              = "Azure/network/azurerm"
-  version             = "3.1.1"
+# Virtual Network
+resource "azurerm_virtual_network" "vnet" {
+  name                = local.name
+  address_space       = ["10.0.0.0/16"]
+  location            = var.region
   resource_group_name = azurerm_resource_group.vnet.name
-  vnet_name           = local.name
-  address_space       = "10.0.0.0/16"
-  subnet_prefixes     = ["10.0.0.0/24", "10.0.2.0/24"]
-  subnet_names        = ["taconet11", "taconet12"]
+}
 
-  depends_on = [azurerm_resource_group.vnet]
+# Subnet 1
+resource "azurerm_subnet" "subnet_1" {
+  name                 = "subnet-1"
+  resource_group_name  = azurerm_resource_group.vnet.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes     = ["10.0.0.0/24"]
+}
+
+# Subnet 2
+resource "azurerm_subnet" "subnet_2" {
+  name                 = "subnet-2"
+  resource_group_name  = azurerm_resource_group.vnet.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes     = ["10.0.1.0/24"]
 }
 
 resource "azurerm_network_security_group" "allow_ssh" {
@@ -89,4 +101,16 @@ resource "azurerm_network_security_group" "allow_ssh" {
     destination_port_range     = "22"
     destination_address_prefix = "*"
   }
+}
+
+resource "azurerm_subnet_network_security_group_association" "nsg_association_subnet_1" {
+  depends_on = [ azurerm_subnet.subnet_1 ]
+  subnet_id                 = azurerm_subnet.subnet_1.id
+  network_security_group_id = azurerm_network_security_group.allow_ssh.id
+}
+
+resource "azurerm_subnet_network_security_group_association" "nsg_association_subnet_2" {
+  depends_on = [ azurerm_subnet.subnet_2 ]
+  subnet_id                 = azurerm_subnet.subnet_2.id
+  network_security_group_id = azurerm_network_security_group.allow_ssh.id
 }
