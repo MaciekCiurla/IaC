@@ -1,10 +1,5 @@
 # Create ADO objects for pipeline
 
-provider "azuredevops" {
-  org_service_url = var.ado_org_service_url
-  # Authentication through PAT defined with AZDO_PERSONAL_ACCESS_TOKEN 
-}
-
 resource "azuredevops_project" "project" {
   name               = local.ado_project_name
   description        = local.ado_project_description

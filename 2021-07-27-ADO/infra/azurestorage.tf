@@ -1,7 +1,3 @@
-provider "azurerm" {
-  features {}
-}
-
 resource "azurerm_resource_group" "setup" {
   name     = local.az_resource_group_name
   location = var.az_location
@@ -51,5 +47,7 @@ data "azurerm_storage_account_sas" "state" {
     create  = true
     update  = false
     process = false
+    tag     = false
+    filter  = false
   }
 }

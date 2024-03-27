@@ -16,41 +16,36 @@ resource "azurerm_key_vault" "setup" {
 # Grant yourself full access (probably could be restricted to just secret_permissions)
 resource "azurerm_key_vault_access_policy" "you" {
   key_vault_id = azurerm_key_vault.setup.id
-
-  tenant_id = data.azurerm_client_config.current.tenant_id
-  object_id = data.azurerm_client_config.current.object_id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = data.azurerm_client_config.current.object_id
 
   key_permissions = [
-    "get", "list", "update", "create", "decrypt", "encrypt", "unwrapKey", "wrapKey", "verify", "sign",
-  ]
+    "Get", "List", "Update", "Create", "Decrypt", "Encrypt", "UnwrapKey", "WrapKey", "Verify", "Sign",
+  ] 
 
   secret_permissions = [
-    "get", "list", "set", "delete", "purge", "recover", "backup"
+    "Get", "List", "Set", "Delete", "Purge", "Recover", "Backup"
   ]
 
   certificate_permissions = [
-    "get", "list", "create", "import", "delete", "update",
+    "Get", "List", "Create", "Import", "Delete", "Update",
   ]
 }
 
 # Grant the pipeline SP access to [get,list] secrets from the KV
 resource "azurerm_key_vault_access_policy" "pipeline" {
   key_vault_id = azurerm_key_vault.setup.id
-
   tenant_id = data.azurerm_client_config.current.tenant_id
   object_id = azuread_service_principal.service_connection.object_id
-
   secret_permissions = [
-    "get", "list",
+    "Get", "List",
   ]
 
 }
 
 # Populate with secrets to be used by the pipeline
 resource "azurerm_key_vault_secret" "pipeline" {
-  depends_on = [
-    azurerm_key_vault_access_policy.you
-  ]
+  depends_on = [ azurerm_key_vault_access_policy.you ]
   for_each     = local.pipeline_variables
   name         = each.key
   value        = each.value

@@ -1,0 +1,13 @@
+ado_org_service_url      = "https://dev.azure.com/..."
+ado_org_pat              = ""
+ado_github_repo          = ""
+ado_github_pat           = ""
+prefix                   = "tacos"
+az_location              = "west europe"
+az_container_name        = "terraform-state"
+az_state_key             = "terraform.tfstate" 
+az_client_id             = ""
+az_client_secret         = ""
+az_subscription          = ""
+az_tenant                = ""
+

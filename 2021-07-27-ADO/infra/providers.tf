@@ -7,9 +7,8 @@ terraform {
 
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 2.0"
-
-    }
+      version = "=3.42.0"
+     }
 
     azuread = {
       source  = "hashicorp/azuread"
@@ -17,11 +16,15 @@ terraform {
     }
 
   }
-  backend "remote" {
-    organization = "ned-in-the-cloud"
-
-    workspaces {
-      name = "terraform-tuesday-ado-setup"
-    }
-  }
 }
+
+provider "azurerm" {
+features {}
+}
+
+provider "azuredevops" {
+  org_service_url = var.ado_org_service_url
+  personal_access_token = var.ado_org_pat
+  # Authentication through PAT defined with AZDO_PERSONAL_ACCESS_TOKEN 
+}
+
