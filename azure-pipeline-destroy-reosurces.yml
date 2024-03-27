@@ -1,19 +1,45 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# Azure DevOps pipeline to remove all resources
+
+variables:
+- group: terraform-tuesdays
 
 trigger:
-- main
+  none
+jobs:
+- job:   
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+    - task: TerraformInstaller@0
+      displayName: Install Terraform
+      inputs:
+        terraformVersion: $(terraform_version)
 
-pool:
-  vmImage: ubuntu-latest
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        source: 'specific'
+        project: $(project_id)
+        pipeline: $(pr_pipeline_id)
+        artifact: PlanFile
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+    - task: TerraformCLI@0
+      displayName: Initialize Terraform
+      env:
+        ARM_SAS_TOKEN: $(sas-token)
+      inputs:
+        command: 'init'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/2021-07-27-ADO/vnet'
+        commandOptions: '-backend-config=storage_account_name=$(storageaccount) -backend-config=container_name=$(container-name) -backend-config=key=$(key)'
+        backendType: 'selfConfigured'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    - task: TerraformCLI@0
+      displayName: Terraform Destroy
+      env:
+        ARM_SAS_TOKEN: $(sas-token)
+        ARM_CLIENT_ID: $(az-client-id)
+        ARM_CLIENT_SECRET: $(az-client-secret)
+        ARM_SUBSCRIPTION_ID: $(az-subscription)
+        ARM_TENANT_ID: $(az-tenant)
+      inputs:
+        command: 'destroy'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/2021-07-27-ADO/vnet'
