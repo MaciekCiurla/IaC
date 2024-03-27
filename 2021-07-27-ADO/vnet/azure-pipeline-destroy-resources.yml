@@ -6,7 +6,7 @@ variables:
 trigger: none
   
 jobs:
-- job:   
+- job: Destroy_resources  
   pool:
     vmImage: ubuntu-latest
   steps:
