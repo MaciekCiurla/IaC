@@ -1,46 +1,4 @@
 ###########################
-# CONFIGURATION
-###########################
-
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~> 2.0"
-
-    }
-  }
-
-  backend "azurerm" {
-
-  }
-}
-
-###########################
-# VARIABLES
-###########################
-
-variable "region" {
-  type        = string
-  description = "Region in Azure"
-  default     = "eastus"
-}
-
-variable "prefix" {
-  type        = string
-  description = "prefix for naming"
-  default     = "tacos"
-}
-
-###########################
-# PROVIDERS
-###########################
-
-provider "azurerm" {
-  features {}
-}
-
-###########################
 # DATA SOURCES
 ###########################
 
