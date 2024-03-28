@@ -3,14 +3,19 @@
 variables:
 - group: terraform-tuesdays
 
-trigger:
-  branches:
-    include:
-    - main
-  paths:
-    include:
-    - 2021-07-27-ADO/vnet
+#trigger:
+#  branches:
+#    include:
+#    - main
+#  paths:
+#    include:
+#    - 2021-07-27-ADO/vnet
 
+pr:
+ branches:
+  include:
+    - main
+   
 stages:
 - stage: Apply
   displayName: Apply
