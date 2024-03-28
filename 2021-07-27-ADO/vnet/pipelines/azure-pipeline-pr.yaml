@@ -10,6 +10,8 @@ trigger:
   paths:
     include:
     - 2021-07-27-ADO/vnet
+    exclude: 
+    - 2021-07-27-ADO/pipelines
 
 stages:
 - stage: Validate
