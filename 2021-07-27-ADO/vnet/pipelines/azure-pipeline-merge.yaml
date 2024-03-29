@@ -38,10 +38,12 @@ stages:
     # Download Plan file artifact
     - task: DownloadPipelineArtifact@2
       inputs:
-        buildType: 'current'
+        buildType: 'specific'
+        project: 'e8a7033b-39e1-466c-aeb0-33da8d6bab87'
+        definition: '69'
+        buildVersionToDownload: 'latest'
         artifactName: 'PlanFile'
         targetPath: '$(Pipeline.Workspace)'
-
 
     # Azure Key Vault
     # Download Azure Key Vault secrets
