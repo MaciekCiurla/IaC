@@ -3,8 +3,7 @@
 variables:
 - group: terraform-tuesdays
 
-trigger: 
-  - none
+trigger: none
   
 jobs:
 - job: Destroy_resources  
