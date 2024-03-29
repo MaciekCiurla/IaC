@@ -12,8 +12,8 @@ variables:
 #    - 2021-07-27-ADO/vnet
 
 pr:
- branches:
-  include:
+  branches:
+    include:
     - main
   paths:
     include:
