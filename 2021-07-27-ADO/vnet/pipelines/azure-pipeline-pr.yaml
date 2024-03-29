@@ -3,15 +3,22 @@
 variables:
 - group: terraform-tuesdays
 
-trigger:
-  branches:
-    exclude:
-    - main
-  paths:
-    include:
-    - 2021-07-27-ADO/vnet
-    exclude: 
-    - 2021-07-27-ADO/vnet/pipelines
+#trigger:
+#  branches:
+#    exclude:
+#    - main
+#  paths:
+#    include:
+#    - 2021-07-27-ADO/vnet
+#    exclude: 
+#    - 2021-07-27-ADO/vnet/pipelines
+
+resources:
+  pipelines:
+  - pipeline: CI-pipeline   # Name of the pipeline resource
+    source: PR-pipeline # Name of the pipeline referenced by the pipeline resource
+    trigger: true # enable the trigger
+
 
 stages:
 - stage: Validate
