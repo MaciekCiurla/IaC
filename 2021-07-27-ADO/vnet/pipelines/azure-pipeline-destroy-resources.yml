@@ -18,10 +18,12 @@ jobs:
 
     - task: DownloadPipelineArtifact@2
       inputs:
-        source: 'specific'
-        project: $(project_id)
-        pipeline: $(pr_pipeline_id)
-        artifact: PlanFile
+        buildType: 'specific'
+        project: 'e8a7033b-39e1-466c-aeb0-33da8d6bab87'
+        definition: '69'
+        buildVersionToDownload: 'latest'
+        artifactName: 'PlanFile'
+        targetPath: '$(Pipeline.Workspace)'
 
     - task: AzureKeyVault@1
       inputs:
