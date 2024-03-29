@@ -13,7 +13,8 @@ variables:
 #    exclude: 
 #    - 2021-07-27-ADO/vnet/pipelines
 
-trigger: none
+trigger: 
+  - none
   
 resources:
   pipelines:
