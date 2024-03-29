@@ -13,6 +13,8 @@ variables:
 #    exclude: 
 #    - 2021-07-27-ADO/vnet/pipelines
 
+trigger: none
+  
 resources:
   pipelines:
   - pipeline: CI-pipeline   # Name of the pipeline resource
